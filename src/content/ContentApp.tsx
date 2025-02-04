@@ -8,13 +8,17 @@ const ContentApp = () => {
     const [activeAttendeeId, setActiveAttendeeId] = useState<string>('');
 
     const clickAttendee = (attendeeId: string) => {
-        const checkbox = document.getElementById('assignee-' + attendeeId);
+        let checkbox = document.getElementById('assignee-' + attendeeId);
         if (checkbox) {
             checkbox.click();
         } else {
-            document.getElementById('assignee-show-more')?.click();
-            document.getElementById(attendeeId)?.click();
-            document.getElementById('assignee-show-more')?.click();
+            const showMoreQuery = '[data-testid*="assignee-filter-show-more"]';
+            document.querySelector<HTMLElement>(showMoreQuery)?.click();
+            checkbox = document.getElementById(attendeeId);
+            if (checkbox) {
+                checkbox.click();
+            }
+            document.querySelector<HTMLElement>(showMoreQuery)?.click();
         }
     };
 
